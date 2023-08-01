@@ -341,14 +341,14 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
     const touchStart = useCallback(() => {
       if (disabled) return;
       // disable scroll on touch
-      if (disableScrollOnTouch) {
+      if (disableScrollOnTouch && !fullPageListening) {
         if (typeof disableScrollOnTouch === 'boolean')
           document.body.style.overflow = 'hidden';
         else disableScrollOnTouch.style.overflow = 'hidden';
       }
       isBeingTouchedOrHovered.current = true;
       updateWillChange();
-    }, [disableScrollOnTouch, disabled, updateWillChange]);
+    }, [disableScrollOnTouch, disabled, fullPageListening, updateWillChange]);
 
     const mouseMove = useCallback(
       (e: MouseEvent | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -408,7 +408,7 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
     const touchEnd = useCallback(() => {
       if (disabled) return;
       // enable scroll on touch
-      if (disableScrollOnTouch) {
+      if (disableScrollOnTouch && !fullPageListening) {
         if (typeof disableScrollOnTouch === 'boolean')
           document.body.style.overflow = '';
         else disableScrollOnTouch.style.overflow = '';
@@ -416,7 +416,14 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
       isBeingTouchedOrHovered.current = false;
       updateWillChange(false);
       if (tiltReset) reset();
-    }, [disableScrollOnTouch, disabled, reset, tiltReset, updateWillChange]);
+    }, [
+      disableScrollOnTouch,
+      disabled,
+      fullPageListening,
+      reset,
+      tiltReset,
+      updateWillChange,
+    ]);
 
     const blur = useCallback(() => {
       if (disabled) return;
@@ -490,7 +497,7 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
 
         let angleX =
           gyroMaxAngleX && e.beta
-            ? limitToRange(e.beta, -gyroMaxAngleX, gyroMaxAngleX)
+            ? limitToRange(-e.beta, -gyroMaxAngleX, gyroMaxAngleX)
             : initialAngleX || 0;
         let angleY =
           gyroMaxAngleY && e.gamma

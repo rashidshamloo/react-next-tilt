@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Tilt } from '../lib/index';
-import testImage from '../lib/__test__/img/test.webp';
+
+const testImage = './test.webp';
 
 const Image = () => (
   <img
@@ -223,6 +224,15 @@ export const FullPageListening: Story = {
   args: {
     children: <Image />,
     fullPageListening: true,
+  },
+};
+
+export const Gyroscope: Story = {
+  parameters: { controls: { include: 'gyroMaxAngle' } },
+  args: {
+    children: <Image />,
+    gyroMaxAngleX: 20,
+    gyroMaxAngleY: 20,
   },
 };
 

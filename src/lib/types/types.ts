@@ -73,7 +73,7 @@ export interface TiltRef {
 export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Width of the component
-   * 
+   *
    * @note You can also set the width using `className`, `style`, etc. instead of using this property
    *
    * @default undefined
@@ -83,7 +83,7 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
   width?: string | number;
   /**
    * Height of the component
-   * 
+   *
    * @note You can also set the height using `className`, `style`, etc. instead of using this property
    *
    * @default undefined
@@ -335,7 +335,10 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    * Disables scrolling (`overflow: hidden`) during touch inetraction to prevent unwanted movement
    *
    * @note Disables scrolling on `body` if set to `boolean`
+   *
    * You can also pass an `HTMLElement` which scrolling will be disabled for, instead of `body`
+   *
+   * This property will have no effect if `fullPageListening` is set to `true`
    *
    * @default true
    */
@@ -431,7 +434,7 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Enables/Disables full-page listening. This component's event handlers will be added to the `document`
    *
-   * @note If set to `true`, `controlElement` and `controlElementOnly` properties will have no effect
+   * @note If set to `true`, `controlElement`, `controlElementOnly`, and `disableScrollOnTouch` properties will have no effect
    *
    * @default false
    *
@@ -442,6 +445,8 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    * Element(s) that control(s) this component. This component's event handlers will be added to them
    *
    * @note You can pass an HTMLElement, a ref, or an array of them
+   *
+   * This property will have no effect if `fullPageListening` is set to `true`
    *
    * @default undefined
    *
@@ -455,6 +460,8 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
     | Array<HTMLElement | RefObject<HTMLElement>>;
   /**
    * If set to `true`, events will be disabled for the component and it will be controlled by the controlElement(s) only
+   *
+   * @note This property will have no effect if `fullPageListening` is set to `true`
    *
    * @default false
    *

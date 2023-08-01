@@ -20,6 +20,7 @@ export default defineConfig({
       },
     },
   },
+  base: '/react-next-tilt',
   plugins: [
     react(),
     dts({
