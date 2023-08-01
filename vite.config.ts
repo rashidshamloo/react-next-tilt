@@ -9,6 +9,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/lib/index.tsx'),
       name: 'react-next-tilt',
+      formats:['es']
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
