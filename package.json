@@ -3,12 +3,16 @@
   "private": false,
   "version": "0.0.1",
   "description": "A Performant Customizable Tilt Component for React",
-  "main": "./dist/react-next-tilt.js",
+  "main": "./dist/react-next-tilt.umd.cjs",
   "module": "./dist/react-next-tilt.js",
   "exports": {
     ".": {
       "import": [
         "./dist/react-next-tilt.js",
+        "./dist/index.d.ts"
+      ],
+      "require": [
+        "./dist/react-next-tilt.umd.cjs",
         "./dist/index.d.ts"
       ]
     }
@@ -93,6 +97,7 @@
   },
   "files": [
     "./dist/react-next-tilt.js",
+    "./dist/react-next-tilt.umd.cjs",
     "./dist/index.d.ts"
   ],
   "parserOptions": {
