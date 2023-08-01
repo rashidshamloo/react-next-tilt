@@ -67,13 +67,12 @@ Once the package is installed, you can `import` the component:
 import { Tilt } from 'react-next-tilt';
 ```
 
-<hr>
 
 ## Usage
 
 ### Basic Usage
 
-Place the element/component you want the tilt effect to be applied to inside the `<Tilt></Tilt>` tags.
+Place the element/component you want the tilt effect to be applied to inside of `<Tilt></Tilt>`.
 
 ```js
 <Tilt>
