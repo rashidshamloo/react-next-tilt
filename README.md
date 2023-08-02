@@ -118,7 +118,7 @@ The component's ref object contains these properties:
 ### Ref Usage (ref function)
 
 ```ts
-import { Tilt, TiltRef } from 'react-next-tilt';
+import { Tilt } from 'react-next-tilt';
 
 const MyComponent = () => {
   return (
