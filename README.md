@@ -49,7 +49,7 @@
 - `"Full-Page Listening"` support
 - `"Control Element"` support
 - No jittery movement around the edges
-- Built with performance in mind (`useAnimationFrame()`, `will-change`, and other optimizations)
+- Built with performance in mind (`requestAnimationFrame()`, `will-change`, and other optimizations)
 - Built from the ground up using React Hooks/TypeScript (is not a port of another library)
 - Minimum amount of component re-renders
 - Typed props with JSDoc descriptions
