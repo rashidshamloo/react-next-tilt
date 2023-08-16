@@ -32,7 +32,7 @@ export default defineConfig({
           filePath: filePath.replace('types/types.d.ts', 'index.d.ts'),
           content:
             content +
-            `export declare const Tilt: import("react").ForwardRefExoticComponent<TiltProps & import("react").RefAttributes<TiltRef>>;\nexport default Tilt;`,
+            `export declare const Tilt: import("react").MemoExoticComponent<import("react").ForwardRefExoticComponent<TiltProps & import("react").RefAttributes<TiltRef>>>;\nexport default Tilt;`,
         };
       },
     }),

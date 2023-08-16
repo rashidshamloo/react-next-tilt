@@ -8,6 +8,7 @@ import {
   useImperativeHandle,
   PropsWithChildren,
   RefObject,
+  memo,
 } from 'react';
 
 // utility
@@ -17,12 +18,13 @@ import {
   getSpotGlareTransform,
   getLineGlareTransform,
   getHTMLElement,
+  isDeepEqual,
 } from './utility/utility';
 
 // types
 import { TiltProps, TiltRef, Position, Angle, Offset } from './types/types';
 
-export const Tilt = forwardRef<TiltRef, TiltProps>(
+const NextTilt = forwardRef<TiltRef, TiltProps>(
   (
     {
       width,
@@ -62,7 +64,7 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
       disabled = false,
       disabledFilter = 'grayscale(1) brightness(125%)',
       CSSTransition = 'all 0.4s cubic-bezier(0.03, 0.98, 0.52, 0.99)',
-      TiltWrapper = ({ children }: PropsWithChildren) => <>{children}</>,
+      TiltWrapper,
       fullPageListening = false,
       controlElement,
       controlElementOnly = false,
@@ -74,7 +76,6 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
       onTouchStart,
       onTouchMove,
       onTouchEnd,
-      onBlur,
       children,
       ...props
     }: TiltProps,
@@ -92,6 +93,13 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
     const tiltRef = useRef<HTMLDivElement>(null);
     const spotGlareRef = useRef<HTMLDivElement>(null);
     const lineGlareRef = useRef<HTMLDivElement>(null);
+
+    // tilt wrapper component default
+    const TiltWrapperDefault = useCallback(
+      ({ children }: PropsWithChildren) => <>{children}</>,
+      []
+    );
+    const TiltWrapperComponent = TiltWrapper || TiltWrapperDefault;
 
     // line glare width check
     if (lineGlareEnable) {
@@ -425,11 +433,6 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
       updateWillChange,
     ]);
 
-    const blur = useCallback(() => {
-      if (disabled) return;
-      reset();
-    }, [disabled, reset]);
-
     // adding event listeners to controlElement(s)/document
     useEffect(() => {
       if (!controlElement && !fullPageListening) return;
@@ -456,7 +459,6 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
         el.addEventListener('touchstart', touchStart, { passive: true });
         el.addEventListener('touchmove', touchMove, { passive: true });
         el.addEventListener('touchend', touchEnd, { passive: true });
-        el.addEventListener('blur', blur);
       }
 
       return () => {
@@ -471,7 +473,6 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
           el.removeEventListener('touchstart', touchStart);
           el.removeEventListener('touchmove', touchMove);
           el.removeEventListener('touchend', touchEnd);
-          el.removeEventListener('blur', blur);
         }
       };
     }, [
@@ -482,7 +483,6 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
       touchStart,
       touchMove,
       touchEnd,
-      blur,
       fullPageListening,
     ]);
 
@@ -534,10 +534,9 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
         ref={(el) => {
           if (el) {
             containerRef.current = el;
-            // if initial angle is provided or
-            // this is a re-render and currentPosition already has a value,
-            // reset position, tilt and glare elements
-            if (initialAngleX || initialAngleY || offset.current) reset();
+            // if initial angle is set and this is not a re-render,
+            // set initial angle by calling reset
+            if ((initialAngleX || initialAngleY) && !offset.current) reset();
           }
         }}
         data-testid={testIdEnable ? 'container' : undefined}
@@ -614,19 +613,9 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
               : touchEnd
             : onTouchEnd
         }
-        onBlur={
-          attachEvents
-            ? onBlur
-              ? (e) => {
-                  blur();
-                  onBlur(e);
-                }
-              : blur
-            : onBlur
-        }
         {...props}
       >
-        <TiltWrapper>
+        <TiltWrapperComponent>
           <div
             ref={tiltRef}
             data-testid={testIdEnable ? 'tilt' : undefined}
@@ -720,10 +709,14 @@ export const Tilt = forwardRef<TiltRef, TiltProps>(
               </div>
             )}
           </div>
-        </TiltWrapper>
+        </TiltWrapperComponent>
       </div>
     );
   }
+);
+
+export const Tilt = memo(NextTilt, (prevProps, nextProps) =>
+  isDeepEqual(prevProps, nextProps)
 );
 
 Tilt.displayName = 'Tilt';

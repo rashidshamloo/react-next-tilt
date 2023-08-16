@@ -529,7 +529,7 @@ describe('<Tilt />', () => {
           .should('contain', 'rotateX(0deg)')
           .should('contain', 'rotateY(0deg)');
       });
-      it('Testing with "beta = 45" and "gamma = -45", transform should contain "rotateX(20deg)" and "rotateY(-20deg)"', () => {
+      it('Testing with "beta = 45" and "gamma = -45", transform should contain "rotateX(-20deg)" and "rotateY(-20deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={false} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -540,10 +540,10 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(20deg)')
+          .should('contain', 'rotateX(-20deg)')
           .should('contain', 'rotateY(-20deg)');
       });
-      it('Testing with "beta = 45" and "gamma = 0", transform should contain "rotateX(20deg)" and "rotateY(0deg)"', () => {
+      it('Testing with "beta = 45" and "gamma = 0", transform should contain "rotateX(-20deg)" and "rotateY(0deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={false} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -554,10 +554,10 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(20deg)')
+          .should('contain', 'rotateX(-20deg)')
           .should('contain', 'rotateY(0deg)');
       });
-      it('Testing with "beta = 45" and "gamma = 45", transform should contain "rotateX(20deg)" and "rotateY(20deg)"', () => {
+      it('Testing with "beta = 45" and "gamma = 45", transform should contain "rotateX(-20deg)" and "rotateY(20deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={false} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -568,7 +568,7 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(20deg)')
+          .should('contain', 'rotateX(-20deg)')
           .should('contain', 'rotateY(20deg)');
       });
       it('Testing with "beta = 0" and "gamma = 45", transform should contain "rotateX(0deg)" and "rotateY(20deg)"', () => {
@@ -585,7 +585,7 @@ describe('<Tilt />', () => {
           .should('contain', 'rotateX(0deg)')
           .should('contain', 'rotateY(20deg)');
       });
-      it('Testing with "beta = -45" and "gamma = 45", transform should contain "rotateX(-20deg)" and "rotateY(20deg)"', () => {
+      it('Testing with "beta = -45" and "gamma = 45", transform should contain "rotateX(20deg)" and "rotateY(20deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={false} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -596,10 +596,10 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(-20deg)')
+          .should('contain', 'rotateX(20deg)')
           .should('contain', 'rotateY(20deg)');
       });
-      it('Testing with "beta = -45" and "gamma = 0", transform should contain "rotateX(-20deg)" and "rotateY(0deg)"', () => {
+      it('Testing with "beta = -45" and "gamma = 0", transform should contain "rotateX(20deg)" and "rotateY(0deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={false} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -610,10 +610,10 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(-20deg)')
+          .should('contain', 'rotateX(20deg)')
           .should('contain', 'rotateY(0deg)');
       });
-      it('Testing with "beta = -45" and "gamma = -45", transform should contain "rotateX(-20deg)" and "rotateY(-20deg)"', () => {
+      it('Testing with "beta = -45" and "gamma = -45", transform should contain "rotateX(20deg)" and "rotateY(-20deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={false} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -624,7 +624,7 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(-20deg)')
+          .should('contain', 'rotateX(20deg)')
           .should('contain', 'rotateY(-20deg)');
       });
       it('Testing with "beta = 0" and "gamma = -45", transform should contain "rotateX(0deg)" and "rotateY(-20deg)"', () => {
@@ -671,7 +671,7 @@ describe('<Tilt />', () => {
           .should('contain', 'rotateX(0deg)')
           .should('contain', 'rotateY(0deg)');
       });
-      it('Testing with "beta = 45" and "gamma = -45", transform should contain "rotateX(-20deg)" and "rotateY(20deg)"', () => {
+      it('Testing with "beta = 45" and "gamma = -45", transform should contain "rotateX(20deg)" and "rotateY(20deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={true} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -682,10 +682,10 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(-20deg)')
+          .should('contain', 'rotateX(20deg)')
           .should('contain', 'rotateY(20deg)');
       });
-      it('Testing with "beta = 45" and "gamma = 0", transform should contain "rotateX(-20deg)" and "rotateY(0deg)"', () => {
+      it('Testing with "beta = 45" and "gamma = 0", transform should contain "rotateX(20deg)" and "rotateY(0deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={true} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -696,10 +696,10 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(-20deg)')
+          .should('contain', 'rotateX(20deg)')
           .should('contain', 'rotateY(0deg)');
       });
-      it('Testing with "beta = 45" and "gamma = 45", transform should contain "rotateX(-20deg)" and "rotateY(-20deg)"', () => {
+      it('Testing with "beta = 45" and "gamma = 45", transform should contain "rotateX(20deg)" and "rotateY(-20deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={true} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -710,7 +710,7 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(-20deg)')
+          .should('contain', 'rotateX(20deg)')
           .should('contain', 'rotateY(-20deg)');
       });
       it('Testing with "beta = 0" and "gamma = 45", transform should contain "rotateX(0deg)" and "rotateY(-20deg)"', () => {
@@ -727,7 +727,7 @@ describe('<Tilt />', () => {
           .should('contain', 'rotateX(0deg)')
           .should('contain', 'rotateY(-20deg)');
       });
-      it('Testing with "beta = -45" and "gamma = 45", transform should contain "rotateX(20deg)" and "rotateY(-20deg)"', () => {
+      it('Testing with "beta = -45" and "gamma = 45", transform should contain "rotateX(-20deg)" and "rotateY(-20deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={true} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -738,10 +738,10 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(20deg)')
+          .should('contain', 'rotateX(-20deg)')
           .should('contain', 'rotateY(-20deg)');
       });
-      it('Testing with "beta = -45" and "gamma = 0", transform should contain "rotateX(20deg)" and "rotateY(0deg)"', () => {
+      it('Testing with "beta = -45" and "gamma = 0", transform should contain "rotateX(-20deg)" and "rotateY(0deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={true} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -752,10 +752,10 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(20deg)')
+          .should('contain', 'rotateX(-20deg)')
           .should('contain', 'rotateY(0deg)');
       });
-      it('Testing with "beta = -45" and "gamma = -45", transform should contain "rotateX(20deg)" and "rotateY(20deg)"', () => {
+      it('Testing with "beta = -45" and "gamma = -45", transform should contain "rotateX(-20deg)" and "rotateY(20deg)"', () => {
         cy.mount(
           <MockTilt gyroReverse={true} gyroMaxAngleX={20} gyroMaxAngleY={20} />
         );
@@ -766,7 +766,7 @@ describe('<Tilt />', () => {
         });
         cy.get('[data-testid="tilt"]')
           .should('have.attr', 'style')
-          .should('contain', 'rotateX(20deg)')
+          .should('contain', 'rotateX(-20deg)')
           .should('contain', 'rotateY(20deg)');
       });
       it('Testing with "beta = 0" and "gamma = -45", transform should contain "rotateX(0deg)" and "rotateY(20deg)"', () => {
