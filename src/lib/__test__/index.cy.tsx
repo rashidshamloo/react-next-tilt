@@ -1398,6 +1398,161 @@ describe('<Tilt />', () => {
             .should('contain', 'opacity: 1');
         });
       });
+      describe('Testing "all" position', () => {
+        it('Testing with pointer at center, transform should be "translateX(0%) translateY(0%)", opacity should be "0"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.center
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(0%) translateY(0%)')
+            .should('contain', 'opacity: 0');
+        });
+        it('Testing with pointer at top right, transform should be "translateX(-25%) translateY(25%)", opacity should be "1"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.topRight
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(-25%) translateY(25%)')
+            .should('contain', 'opacity: 1');
+        });
+        it('Testing with pointer at right, transform should be translateX(-25%) translateY(0%)", opacity should be "1"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.right
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(-25%) translateY(0%)')
+            .should('contain', 'opacity: 1');
+        });
+        it('Testing with pointer at bottom right, transform should be "translateX(-25%) translateY(-25%)", opacity should be "1"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.bottomRight
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(-25%) translateY(-25%)')
+            .should('contain', 'opacity: 1');
+        });
+        it('Testing with pointer at bottom, transform should be "translateX(0%) translateY(-25%)", opacity should be "1"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.bottom
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(0%) translateY(-25%)')
+            .should('contain', 'opacity: 1');
+        });
+        it('Testing with pointer at bottom left, transform should be "translateX(25%) translateY(-25%)", opacity should be "1"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.bottomLeft
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(25%) translateY(-25%)')
+            .should('contain', 'opacity: 1');
+        });
+        it('Testing with pointer at left, transform should be "translateX(25%) translateY(0%)", opacity should be "1"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.left
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(25%) translateY(0%)')
+            .should('contain', 'opacity: 1');
+        });
+        it('Testing with pointer at top left, transform should be "translateX(25%) translateY(25%)", opacity should be "1"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.topLeft
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(25%) translateY(25%)')
+            .should('contain', 'opacity: 1');
+        });
+        it('Testing with pointer at top, transform should be "translateX(0%) translateY(25%)", opacity should be "1"', () => {
+          cy.mount(
+            <MockTilt
+              spotGlareEnable={true}
+              spotGlarePosition="all"
+              spotGlareMaxOpacity={1}
+            />
+          );
+          cy.get('[data-testid="container"]').trigger(
+            'mousemove',
+            position.top
+          );
+          cy.get('[data-testid="spot-glare"]')
+            .should('have.attr', 'style')
+            .should('contain', 'transform: translateX(0%) translateY(25%)')
+            .should('contain', 'opacity: 1');
+        });
+      });
     });
     describe('Testing spotGlareReverse', () => {
       it('Testing with pointer at center, transform should be "translateX(25%)"', () => {
@@ -1479,6 +1634,22 @@ describe('<Tilt />', () => {
         cy.get('[data-testid="spot-glare"]')
           .should('have.attr', 'style')
           .should('contain', 'transform: translateX(50%)');
+      });
+      it('Testing with spotGlarePosition="all" and pointer at bottom right, transform should be "translateX(25%) translateY(25%)"', () => {
+        cy.mount(
+          <MockTilt
+            spotGlareEnable={true}
+            spotGlareReverse={true}
+            spotGlarePosition="all"
+          />
+        );
+        cy.get('[data-testid="container"]').trigger(
+          'mousemove',
+          position.bottomRight
+        );
+        cy.get('[data-testid="spot-glare"]')
+          .should('have.attr', 'style')
+          .should('contain', 'transform: translateX(25%) translateY(25%)');
       });
     });
   });

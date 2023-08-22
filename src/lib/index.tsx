@@ -268,7 +268,8 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
             })`;
           }
           if (spotGlareRef.current) {
-            spotGlareRef.current.style.transform = `translateX(0%)`;
+            spotGlareRef.current.style.transform =
+              'translateX(0%) translateY(0%)';
             spotGlareRef.current.style.opacity = '0';
           }
           if (tiltRef.current)
@@ -654,16 +655,13 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
                   data-testid={testIdEnable ? 'spot-glare' : undefined}
                   style={{
                     position: 'absolute',
-                    left: '-100%',
-                    top: '-100%',
+                    left: spotGlarePosition === 'all' ? '-50%' : '-100%',
+                    top: spotGlarePosition === 'all' ? '-50%' : '-100%',
                     width: '200%',
                     height: '200%',
-                    filter: lineGlareBlurEnable
-                      ? `blur(${lineGlareBlurAmount})`
-                      : undefined,
                     transition: CSSTransition,
                     backgroundImage: `radial-gradient(${spotGlareColor}, transparent)`,
-                    transform: 'translateX(0%)',
+                    transform: 'translateX(0%) translateY(0%)',
                     opacity: '0',
                   }}
                 />

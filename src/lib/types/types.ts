@@ -14,7 +14,7 @@ import {
 import { Property } from 'csstype';
 
 // types
-export type SpotGlarePosition = 'top' | 'right' | 'bottom' | 'left';
+export type SpotGlarePosition = 'top' | 'right' | 'bottom' | 'left' | 'all';
 export type LineGlareDirection = 'to-bottom-right' | 'to-bottom-left';
 export type LineGlareHoverPosition =
   | 'top-left'

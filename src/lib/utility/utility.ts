@@ -59,6 +59,20 @@ export const getSpotGlareOpacity = (
      *  - 0.5 = [0.5 - 0] -> * 2 = [1 - 0]
      */
     opacityNum = (offset.offsetX - 0.5) * 2;
+  else if (spotGlarePosition === 'all')
+    /*
+     *  when hovering from the center (offsetX = 0.5) to the edges (offsetX = 0 or 1)
+     *  the opacity should be going from transparent (0) to fully visible (1)
+     *  for both offsetX = 0 and offsetX = 1, abs(offsetX - 0.5) is 0.5
+     *  so we need to map abs(offsetX - 0.5) to [0 - 1]
+     *  - 0.5 = [-0.5 - 0.5] => abs() = [0 - 0.5] => * 2 = [0 - 1]
+     *  after doing similar mapping for offsetY, we set the maximum
+     *  of the two numbers as the opacity.
+     */
+    opacityNum = Math.max(
+      Math.abs(offset.offsetX - 0.5) * 2,
+      Math.abs(offset.offsetY - 0.5) * 2
+    );
 
   // limit opacity to spotGlareMaxOpacity
   return (opacityNum * spotGlareMaxOpacity).toFixed(2);
@@ -79,7 +93,7 @@ export const getSpotGlareTransform = (
     offsetY = 1 - offsetY;
   }
 
-  let transform = 'translateX(0deg) translateY(0deg)';
+  let transform = 'translateX(0%) translateY(0%)';
 
   if (spotGlarePosition === 'top')
     /*
@@ -105,6 +119,18 @@ export const getSpotGlareTransform = (
   else if (spotGlarePosition === 'right')
     // similar to above but translateX should be 50% to move it to the right
     transform = `translateX(50%) translateY( ${offsetY * 50}% ) `;
+  else if (spotGlarePosition === 'all')
+    /*
+     *  for the 'all' postition, starting position is at the center
+     *  and when hovering from top to bottom (offsetY = [0 - 1]),
+     *  translateY should be chnaging from [-25% - 25%]
+     *  mapping [0 - 1] to [-25 - 25]
+     *  * -0.5 = [-0.5 - 0.5] => * 50 = [-25 - 25]
+     *  and similar mapping is applied to offsetX
+     * */
+    transform = `translateX(${(offsetX - 0.5) * 50}%) translateY(${
+      (offsetY - 0.5) * 50
+    }%) `;
 
   return transform;
 };
