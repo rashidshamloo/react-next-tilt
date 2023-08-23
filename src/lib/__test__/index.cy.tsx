@@ -120,6 +120,23 @@ describe('<Tilt />', () => {
     });
   });
 
+  describe('Testing shadow', () => {
+    it('Testing with shadowEnable = false and shadow = "box-shadow: 0 0 2rem black", should not contain "box-shadow: 0 0 2rem black"', () => {
+      cy.mount(<MockTilt shadowEnable={false} shadow="0 0 2rem black" />);
+      cy.get('[data-testid="tilt"]')
+        .trigger('mouseover', position.center)
+        .should('have.attr', 'style')
+        .should('not.contain', 'box-shadow: black 0px 0px 2rem');
+    });
+    it('Testing with shadowEnable = true and shadow = "box-shadow: 0 0 2rem black", should contain "box-shadow: 0 0 2rem black"', () => {
+      cy.mount(<MockTilt shadowEnable={true} shadow="0 0 2rem black" />);
+      cy.get('[data-testid="tilt"]')
+        .trigger('mouseover', position.center)
+        .should('have.attr', 'style')
+        .should('contain', 'box-shadow: black 0px 0px 2rem');
+    });
+  });
+
   describe('Testing "disabled = true"', () => {
     it('Testing with pointer, pointer at top left and "scale = 1.1", transform should contain "rotateX(0deg)" and "rotateY(0deg)" and "scale3d(1, 1, 1)"', () => {
       cy.mount(

@@ -32,6 +32,8 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       borderRadius,
       perspective = '1000px',
       scale = 1,
+      shadowEnable = false,
+      shadow = '0 0 1rem rgba(0,0,0,0.5)',
       lineGlareEnable = true,
       lineGlareBlurEnable = true,
       lineGlareBlurAmount = '4px',
@@ -326,6 +328,15 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
         lineGlareRef.current.style.willChange = add ? 'transform' : '';
     }, []);
 
+    // updates the box-shadow css property on the tilt element
+    const updateBoxShadow = useCallback(
+      (add = true) => {
+        if (tiltRef.current && shadowEnable)
+          tiltRef.current.style.boxShadow = add ? shadow : '';
+      },
+      [shadow, shadowEnable]
+    );
+
     // TiltRef
     useImperativeHandle(
       ref,
@@ -345,7 +356,8 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       if (disabled) return;
       isBeingTouchedOrHovered.current = true;
       updateWillChange();
-    }, [disabled, updateWillChange]);
+      updateBoxShadow();
+    }, [disabled, updateBoxShadow, updateWillChange]);
 
     const touchStart = useCallback(() => {
       if (disabled) return;
@@ -357,7 +369,14 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       }
       isBeingTouchedOrHovered.current = true;
       updateWillChange();
-    }, [disableScrollOnTouch, disabled, fullPageListening, updateWillChange]);
+      updateBoxShadow();
+    }, [
+      disableScrollOnTouch,
+      disabled,
+      fullPageListening,
+      updateBoxShadow,
+      updateWillChange,
+    ]);
 
     const mouseMove = useCallback(
       (e: MouseEvent | React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -411,8 +430,9 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       if (disabled) return;
       isBeingTouchedOrHovered.current = false;
       updateWillChange(false);
+      updateBoxShadow(false);
       if (tiltReset) reset();
-    }, [disabled, reset, tiltReset, updateWillChange]);
+    }, [disabled, reset, tiltReset, updateBoxShadow, updateWillChange]);
 
     const touchEnd = useCallback(() => {
       if (disabled) return;
@@ -424,6 +444,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       }
       isBeingTouchedOrHovered.current = false;
       updateWillChange(false);
+      updateBoxShadow(false);
       if (tiltReset) reset();
     }, [
       disableScrollOnTouch,
@@ -431,6 +452,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       fullPageListening,
       reset,
       tiltReset,
+      updateBoxShadow,
       updateWillChange,
     ]);
 

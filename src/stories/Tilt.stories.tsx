@@ -101,6 +101,15 @@ export const Scale: Story = {
   },
 };
 
+export const Shadow: Story = {
+  parameters: { controls: { include: ['shadowEnable', 'shadow'] } },
+  args: {
+    children: <Image />,
+    shadowEnable: true,
+    shadow: '0 0 1.5rem yellow',
+  },
+};
+
 export const TiltReset: Story = {
   parameters: { controls: { include: 'tiltReset' } },
   args: {

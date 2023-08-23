@@ -124,6 +124,24 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    */
   scale?: number;
   /**
+   * Enables/Disables the box shadow applied to the tilt element on hover/touch
+   *
+   * @default false
+   *
+   * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--shadow Storybook}
+   */
+  shadowEnable?: boolean;
+  /**
+   * Box shadow applied to the tilt element on hover/touch
+   *
+   * @default '0 0 1rem rgba(0,0,0,0.5)'
+   *
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow MDN - box-shadow}
+   *
+   * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--shadow Storybook}
+   */
+  shadow?: string;
+  /**
    * Enables/Disables the line glare effect
    *
    * @default true
@@ -252,7 +270,7 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    *
    * @default 'top'
    *
-   * @example 'top', 'bottom', 'left', 'right'
+   * @example 'top', 'bottom', 'left', 'right', 'all'
    *
    * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--spot-glare Storybook}
    */
