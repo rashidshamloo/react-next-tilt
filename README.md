@@ -106,7 +106,7 @@ Element(s) that control(s) this component. This component's event handlers will 
 
 ## Events/Callbacks
 
-<table aria-hidden="false"><thead><tr><th><span>Name</span></th><th><span>Description</span></th><th><span>Parameters</span></th></tr><tbody><tr><td><span>onTilt</span></td><td><div><span>Callback function that is called with the current tilt angle at every tilt event</span></div><div></div><div><div><code><span>(angle: Angle) => void</span></code></div></div></td><td><div><span>angle: Tilt angle ({angleX: number, angleY: number})</span></div></td></tr></tbody></table>
+<table aria-hidden="false"><thead><tr><th><span>Name</span></th><th><span>Description</span></th><th><span>Parameters</span></th></tr><tbody><tr><td><span>onTilt</span></td><td><div><span>Callback function that is called with the current tilt angle at every tilt event</span></div><div></div><div><div><code><span>(angle: Angle) => void</span></code></div></div></td><td><div><span>angle: Tilt angle ({angleX: number, angleY: number})</span></div></td></tr><tr><td><span>onReset</span></td><td><div><span>Callback function that is called when the tilt angle is reset</span></div><div></div><div><div><code><span>() => void</span></code></div></div></td><td><div><span></span></div></td></tr></tbody></table>
 
 ## Ref
 

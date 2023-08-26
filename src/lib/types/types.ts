@@ -502,6 +502,12 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    * @default undefined
    */
   onTilt?: (angle: Angle) => void;
+  /**
+   * Callback function that is called when the tilt angle is reset
+   *
+   * @default undefined
+   */
+  onReset?: () => void;
   [data: `data-${string}`]: string | undefined;
   onMouseEnter?: MouseEventHandler<HTMLDivElement>;
   onMouseMove?: MouseEventHandler<HTMLDivElement>;

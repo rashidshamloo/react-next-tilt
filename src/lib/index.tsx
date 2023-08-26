@@ -72,6 +72,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       controlElementOnly = false,
       testIdEnable = false,
       onTilt,
+      onReset,
       onMouseEnter,
       onMouseMove,
       onMouseLeave,
@@ -251,6 +252,9 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
     // resets tilt angle, line glare transform,
     // and spot glare transform/opacity
     const reset = useCallback(() => {
+      // callback function
+      onReset && onReset();
+
       // if initial angle is provided, set it as the current angle
       if (initialAngleX || initialAngleY) {
         const initialAngle: Angle = {
@@ -278,7 +282,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
             tiltRef.current.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         });
       }
-    }, [initialAngleX, initialAngleY, lineGlareReverse, tilt]);
+    }, [initialAngleX, initialAngleY, lineGlareReverse, onReset, tilt]);
 
     // sets the offset value based on clinetX/Y
     const setOffset = useCallback(

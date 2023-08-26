@@ -1697,6 +1697,21 @@ describe('<Tilt />', () => {
           expect(angleY).to.eq(-20);
         });
     });
+    it('Testing onReset(), "testFunction" should be called', () => {
+      const test = {
+        testFunction: () => {
+          //test
+        },
+      };
+      cy.spy(test, 'testFunction');
+      cy.mount(<MockTilt onReset={test.testFunction} />);
+      cy.get('[data-testid="container"]')
+        .trigger('mousemove', position.center)
+        .trigger('mouseout')
+        .then(() => {
+          expect(test.testFunction).to.be.called;
+        });
+    });
     it('Testing onMouseEnter() , "testFunction" should be called and "event.type" should be "mouseenter"', () => {
       let isCorrectEvent = false;
       const test = {

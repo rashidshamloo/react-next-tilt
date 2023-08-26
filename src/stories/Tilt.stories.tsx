@@ -28,7 +28,7 @@ const meta: Meta<typeof Tilt> = {
       default: 'dark',
       values: [{ name: 'dark', value: '#333' }],
     },
-    actions: { argTypesRegex: 'onTilt' },
+    actions: { argTypesRegex: /^on(Tilt|Reset)$/ },
     docs: {
       source: { language: 'tsx' },
     },
