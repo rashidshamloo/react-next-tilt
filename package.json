@@ -1,7 +1,7 @@
 {
   "name": "react-next-tilt",
   "private": false,
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A Performant Customizable Tilt Component for React",
   "main": "./dist/react-next-tilt.umd.cjs",
   "module": "./dist/react-next-tilt.js",
