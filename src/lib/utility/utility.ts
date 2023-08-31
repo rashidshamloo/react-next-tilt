@@ -183,7 +183,7 @@ export const getLineGlareTransform = (
 
 // gets HTMLElement from the union
 export const getHTMLElement = (
-  el: HTMLElement | RefObject<HTMLElement> | Document
+  el: HTMLElement | RefObject<unknown> | Document
 ): HTMLElement | undefined => {
   // if it's an HTMLElement, return it
   if (el instanceof HTMLElement) return el;
@@ -191,8 +191,18 @@ export const getHTMLElement = (
   // if it's the document, case it to HTMLElement and return it
   if (el instanceof Document) return document as unknown as HTMLElement;
 
-  // if it's a "RefObject" and "ref.current" is not null, return it
-  if (el.current) return el.current;
+  // if it's a "RefObject" and "ref.current.element" is an HTMLElement, return it
+  // (for TiltRef, FlipTiltRef, and ParallaxRef)
+  if (
+    el.current &&
+    el.current instanceof Object &&
+    'element' in el.current &&
+    el.current.element instanceof HTMLElement
+  )
+    return el.current.element;
+
+  // if it's a "RefObject" and "ref.current" is an HTMLElement, return it
+  if (el.current && el.current instanceof HTMLElement) return el.current;
 
   // otherwise, return undefined
   return undefined;

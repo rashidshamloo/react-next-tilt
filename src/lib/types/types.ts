@@ -40,9 +40,9 @@ export interface TiltRef {
    * Tilts the component to the given angle
    *
    * @param {Angle} angle - Tilt angle ({angleX: number, angleY: number})
-   * @param {boolean} [changeScale=false] - Whether to apply the scale property or not
+   * @param {boolean} [changeScaleAndShadow=false] - Whether to apply the scale and shadow properties or not
    */
-  tilt: (angle: Angle, changeScale?: boolean) => void;
+  tilt: (angle: Angle, changeScaleAndShadow?: boolean) => void;
   /**
    * Resets the component (rotation/scale and glare effects)
    */
@@ -474,8 +474,8 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    */
   controlElement?:
     | HTMLElement
-    | RefObject<HTMLElement>
-    | Array<HTMLElement | RefObject<HTMLElement>>;
+    | RefObject<unknown>
+    | Array<HTMLElement | RefObject<unknown>>;
   /**
    * If set to `true`, events will be disabled for the component and it will be controlled by the controlElement(s) only
    *
@@ -486,6 +486,18 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    * @see {@link https://rashidshamloo.github.io/react-next-tilt_demo/control-element Control Element Demo}
    */
   controlElementOnly?: boolean;
+  /**
+   * If set to true, adds `transform-style: preserve-3d;` to the container and tilt elements
+   *
+   * @note Enable if you want to set up a parallax effect and translate elements along the `Z` axis
+   *
+   * Disable if you are having problems with blur
+   *
+   * @warning Can cause blur on scale (prevents re-rastering at higher scales by Chrome's compositor and the element is always rasterized at scale 1)
+   *
+   * @default true
+   */
+  preserve3dEnable?: boolean;
   /**
    * Adds the `data-testid=...` property to all elements for testing purposes
    *

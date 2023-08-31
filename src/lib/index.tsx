@@ -70,6 +70,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       fullPageListening = false,
       controlElement,
       controlElementOnly = false,
+      preserve3dEnable = true,
       testIdEnable = false,
       onTilt,
       onReset,
@@ -140,6 +141,31 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
     }, [lineGlareEnable, lineGlareWidthPercent, lineGlareStart]);
 
     // functions
+
+    // updates the "will-change" css property
+    const updateWillChange = useCallback((add = true) => {
+      requestAnimationFrame(() => {
+        if (tiltRef.current)
+          tiltRef.current.style.willChange = add ? 'transform' : '';
+        if (spotGlareRef.current)
+          spotGlareRef.current.style.willChange = add
+            ? 'transform, opacity'
+            : '';
+        if (lineGlareRef.current)
+          lineGlareRef.current.style.willChange = add ? 'transform' : '';
+      });
+    }, []);
+
+    // updates the box-shadow css property on the tilt element
+    const updateBoxShadow = useCallback(
+      (add = true) => {
+        requestAnimationFrame(() => {
+          if (tiltRef.current && shadowEnable)
+            tiltRef.current.style.boxShadow = add ? shadow : '';
+        });
+      },
+      [shadow, shadowEnable]
+    );
 
     // updates spot glare element's transform and opacity
     const updateSpotGlare = useCallback((): void => {
@@ -240,13 +266,20 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
     // sets currentPosition based on the provided angle,
     // sets tilt angle to it and updates glare elements
     const tilt = useCallback(
-      (angle: Angle, changeScale = false) => {
+      (angle: Angle, changeScaleAndShadow = false) => {
         setOffsetFromAngle(angle);
-        setTiltAngle(angle, changeScale);
+        setTiltAngle(angle, changeScaleAndShadow);
+        updateBoxShadow(changeScaleAndShadow);
         updateLineGlare();
         updateSpotGlare();
       },
-      [updateLineGlare, setOffsetFromAngle, updateSpotGlare, setTiltAngle]
+      [
+        setOffsetFromAngle,
+        setTiltAngle,
+        updateBoxShadow,
+        updateLineGlare,
+        updateSpotGlare,
+      ]
     );
 
     // resets tilt angle, line glare transform,
@@ -320,25 +353,6 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
         offset.current = { offsetX, offsetY };
       },
       [fullPageListening]
-    );
-
-    // updates the "will-change" css property
-    const updateWillChange = useCallback((add = true) => {
-      if (tiltRef.current)
-        tiltRef.current.style.willChange = add ? 'transform' : '';
-      if (spotGlareRef.current)
-        spotGlareRef.current.style.willChange = add ? 'transform, opacity' : '';
-      if (lineGlareRef.current)
-        lineGlareRef.current.style.willChange = add ? 'transform' : '';
-    }, []);
-
-    // updates the box-shadow css property on the tilt element
-    const updateBoxShadow = useCallback(
-      (add = true) => {
-        if (tiltRef.current && shadowEnable)
-          tiltRef.current.style.boxShadow = add ? shadow : '';
-      },
-      [shadow, shadowEnable]
     );
 
     // TiltRef
@@ -466,7 +480,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
 
       // if controlElement is not an array, convert it to one
       let controlElementArray: Array<
-        HTMLElement | RefObject<HTMLElement> | Document
+        HTMLElement | RefObject<unknown> | Document
       >;
       if (fullPageListening || !controlElement)
         controlElementArray = [document];
@@ -561,6 +575,15 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
         ref={(el) => {
           if (el) {
             containerRef.current = el;
+
+            // if this is a re-render
+            if (offset.current) {
+              // if disabled, reset
+              if (disabled) reset();
+              // else tilt according to the offset
+              else tilt(getAngleFromOffset());
+            }
+
             // if initial angle is set and this is not a re-render,
             // set initial angle by calling reset
             if ((initialAngleX || initialAngleY) && !offset.current) reset();
@@ -570,11 +593,12 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
         style={Object.assign(
           {
             display: 'inline-block',
+            verticalAlign: 'middle',
             width,
             height,
             borderRadius,
             perspective,
-            transformStyle: 'preserve-3d',
+            transformStyle: preserve3dEnable ? 'preserve-3d' : undefined,
             backfaceVisibility: 'hidden',
             filter: disabled ? disabledFilter : undefined,
           },
@@ -653,7 +677,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
                 width: '100%',
                 height: '100%',
                 borderRadius,
-                transformStyle: 'preserve-3d',
+                transformStyle: preserve3dEnable ? 'preserve-3d' : undefined,
                 backfaceVisibility: 'hidden',
                 transition: CSSTransition,
                 transform: `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,

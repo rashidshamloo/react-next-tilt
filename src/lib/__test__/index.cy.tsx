@@ -104,6 +104,27 @@ describe('<Tilt />', () => {
       .should('contain', 'perspective: 100px');
   });
 
+  describe('Testing preserve3dEnable', () => {
+    it('Testing preserve3dEnable = true, style should contain "transform-style: preserve-3d"', () => {
+      cy.mount(<MockTilt preserve3dEnable={true} />);
+      cy.get('[data-testid="container"]')
+        .should('have.attr', 'style')
+        .should('contain', 'transform-style: preserve-3d');
+      cy.get('[data-testid="tilt"]')
+        .should('have.attr', 'style')
+        .should('contain', 'transform-style: preserve-3d');
+    });
+    it('Testing preserve3dEnable = false, style should not contain "transform-style: preserve-3d"', () => {
+      cy.mount(<MockTilt preserve3dEnable={false} />);
+      cy.get('[data-testid="container"]')
+        .should('have.attr', 'style')
+        .should('not.contain', 'transform-style: preserve-3d');
+      cy.get('[data-testid="tilt"]')
+        .should('have.attr', 'style')
+        .should('not.contain', 'transform-style: preserve-3d');
+    });
+  });
+
   describe('Testing scale', () => {
     it('Testing initial scale (1.1), should contain style3d(1,1,1)', () => {
       cy.mount(<MockTilt scale={1.1} />);
