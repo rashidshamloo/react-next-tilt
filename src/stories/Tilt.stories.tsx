@@ -102,11 +102,14 @@ export const Scale: Story = {
 };
 
 export const Shadow: Story = {
-  parameters: { controls: { include: ['shadowEnable', 'shadow'] } },
+  parameters: {
+    controls: { include: ['shadowEnable', 'shadow', 'shadowType'] },
+  },
   args: {
     children: <Image />,
     shadowEnable: true,
     shadow: '0 0 1.5rem yellow',
+    shadowType: 'box',
   },
 };
 

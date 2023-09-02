@@ -125,6 +125,35 @@ describe('<Tilt />', () => {
     });
   });
 
+  describe('Testing shadowType', () => {
+    it('Testing shadowType = "box", tilt element style should contain "box-shadow: black 0px 0px 2rem"', () => {
+      cy.mount(
+        <MockTilt
+          shadowEnable={true}
+          shadow="0 0 2rem black"
+          shadowType="box"
+        />
+      );
+      cy.get('[data-testid="container"]').trigger('mouseover', position.center);
+      cy.get('[data-testid="tilt"]')
+        .should('have.attr', 'style')
+        .should('contain', 'box-shadow: black 0px 0px 2rem');
+    });
+    it('Testing shadowType = "drop", container element style should contain "filter: drop-shadow(black 0px 0px 2rem)"', () => {
+      cy.mount(
+        <MockTilt
+          shadowEnable={true}
+          shadow="0 0 2rem black"
+          shadowType="drop"
+        />
+      );
+      cy.get('[data-testid="container"]')
+        .trigger('mouseover', position.center)
+        .should('have.attr', 'style')
+        .should('contain', 'filter: drop-shadow(black 0px 0px 2rem)');
+    });
+  });
+
   describe('Testing scale', () => {
     it('Testing initial scale (1.1), should contain style3d(1,1,1)', () => {
       cy.mount(<MockTilt scale={1.1} />);

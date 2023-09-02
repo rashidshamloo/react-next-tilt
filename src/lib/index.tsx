@@ -34,6 +34,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       scale = 1,
       shadowEnable = false,
       shadow = '0 0 1rem rgba(0,0,0,0.5)',
+      shadowType = 'box',
       lineGlareEnable = true,
       lineGlareBlurEnable = true,
       lineGlareBlurAmount = '4px',
@@ -156,15 +157,29 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       });
     }, []);
 
-    // updates the box-shadow css property on the tilt element
+    // updates the shadow on the tilt/container element
     const updateBoxShadow = useCallback(
       (add = true) => {
         requestAnimationFrame(() => {
-          if (tiltRef.current && shadowEnable)
-            tiltRef.current.style.boxShadow = add ? shadow : '';
+          if (shadowType === 'box') {
+            if (tiltRef.current && shadowEnable)
+              tiltRef.current.style.boxShadow = add ? shadow : '';
+          } else {
+            if (containerRef.current && shadowEnable) {
+              // regex source: https://stackoverflow.com/a/59983708/21092502
+              const currentFilterWithoutDropShadow =
+                containerRef.current.style.filter.replace(
+                  /(drop-shadow?\(.*?\))(?=\s[a-z].*?\(.*?\)|\s*$)/g,
+                  ''
+                );
+              containerRef.current.style.filter = add
+                ? currentFilterWithoutDropShadow + ` drop-shadow(${shadow})`
+                : currentFilterWithoutDropShadow;
+            }
+          }
         });
       },
-      [shadow, shadowEnable]
+      [shadow, shadowEnable, shadowType]
     );
 
     // updates spot glare element's transform and opacity
@@ -601,6 +616,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
             transformStyle: preserve3dEnable ? 'preserve-3d' : undefined,
             backfaceVisibility: 'hidden',
             filter: disabled ? disabledFilter : undefined,
+            transition: shadowType === 'drop' ? CSSTransition : undefined,
           },
           style
         )}

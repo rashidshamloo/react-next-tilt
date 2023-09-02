@@ -21,6 +21,7 @@ export type LineGlareHoverPosition =
   | 'top-right'
   | 'bottom-left'
   | 'bottom-right';
+export type ShadowType = 'box' | 'drop';
 export interface Angle {
   angleX: number;
   angleY: number;
@@ -124,7 +125,7 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    */
   scale?: number;
   /**
-   * Enables/Disables the box shadow applied to the tilt element on hover/touch
+   * Enables/Disables the shadow applied to the container or tilt element on hover/touch
    *
    * @default false
    *
@@ -132,15 +133,31 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    */
   shadowEnable?: boolean;
   /**
-   * Box shadow applied to the tilt element on hover/touch
+   * The shadow applied to the container or tilt element on hover/touch
    *
    * @default '0 0 1rem rgba(0,0,0,0.5)'
    *
-   * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow MDN - box-shadow}
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function/drop-shadow#syntax MDN - drop-shadow}
    *
    * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--shadow Storybook}
    */
   shadow?: string;
+  /**
+   * Type of the shadow applied on hover/touch
+   *
+   * If set to `'box'`, shadow is applied as `box-shadow` to the tilt element
+   *
+   * If set to `'drop'`, shadow is applied as `filter: drop-shadow()` to the container element
+   *
+   * @note Set to `'drop'` if you have a setup where elements go outside the tilt element and want to apply the shadow to them as well,
+   *
+   * Or if you have multiple elements inside the tilt element and want the shadow to apply to them individually and not the whole tilt element
+   *
+   * @default 'box'
+   *
+   * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--shadow Storybook}
+   */
+  shadowType?: ShadowType;
   /**
    * Enables/Disables the line glare effect
    *
