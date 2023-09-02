@@ -42,8 +42,9 @@ export interface TiltRef {
    *
    * @param {Angle} angle - Tilt angle ({angleX: number, angleY: number})
    * @param {boolean} [changeScaleAndShadow=false] - Whether to apply the scale and shadow properties or not
+   * @param {boolean} [gyro=false] - Whether the event is triggered by gyroscope or not
    */
-  tilt: (angle: Angle, changeScaleAndShadow?: boolean) => void;
+  tilt: (angle: Angle, changeScaleAndShadow?: boolean, gyro?: boolean) => void;
   /**
    * Resets the component (rotation/scale and glare effects)
    */
@@ -527,10 +528,11 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    * Callback function that is called with the current tilt angle at every tilt event
    *
    * @param {Angle} angle - Tilt angle ({angleX: number, angleY: number})
+   * @param {boolean} gyro - Whether the event is triggered by gyroscope or not
    *
    * @default undefined
    */
-  onTilt?: (angle: Angle) => void;
+  onTilt?: (angle: Angle, gyro: boolean) => void;
   /**
    * Callback function that is called when the tilt angle is reset
    *

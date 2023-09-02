@@ -260,7 +260,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
 
     // sets the angle and scale for the tilt element
     const setTiltAngle = useCallback(
-      (angle: Angle, changeScale = true) => {
+      (angle: Angle, changeScale = true, gyro = false) => {
         // Note: 'changeScale' is used to apply scale only on touch/hover and not on gyro
         const currentScale = changeScale ? scale : 1;
 
@@ -270,10 +270,13 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
         });
 
         if (onTilt)
-          onTilt({
-            angleX: angle.angleX,
-            angleY: angle.angleY,
-          });
+          onTilt(
+            {
+              angleX: angle.angleX,
+              angleY: angle.angleY,
+            },
+            gyro
+          );
       },
       [onTilt, scale]
     );
@@ -281,9 +284,9 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
     // sets currentPosition based on the provided angle,
     // sets tilt angle to it and updates glare elements
     const tilt = useCallback(
-      (angle: Angle, changeScaleAndShadow = false) => {
+      (angle: Angle, changeScaleAndShadow = false, gyro = false) => {
         setOffsetFromAngle(angle);
-        setTiltAngle(angle, changeScaleAndShadow);
+        setTiltAngle(angle, changeScaleAndShadow, gyro);
         updateBoxShadow(changeScaleAndShadow);
         updateLineGlare();
         updateSpotGlare();
@@ -565,7 +568,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
           angleY = -angleY;
         }
 
-        tilt({ angleX, angleY });
+        tilt({ angleX, angleY }, false, true);
       },
       [
         gyroMaxAngleX,

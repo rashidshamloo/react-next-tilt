@@ -1747,6 +1747,33 @@ describe('<Tilt />', () => {
           expect(angleY).to.eq(-20);
         });
     });
+    it('Testing onTilt() with gyroscope, "testFunction" should be called and "gyro" should be "true"', () => {
+      let gyro: boolean;
+      const test = {
+        testFunction: (_: Angle, g: boolean) => {
+          gyro = g;
+        },
+      };
+      cy.spy(test, 'testFunction');
+      cy.mount(
+        <MockTilt
+          gyroMaxAngleX={20}
+          gyroMaxAngleY={20}
+          onTilt={test.testFunction}
+        />
+      );
+      cy.get('[data-testid="tilt"]')
+        .trigger('deviceorientation', {
+          alpha: 0,
+          beta: 45,
+          gamma: -45,
+        })
+        .then(() => {
+          expect(test.testFunction).to.be.called;
+          expect(gyro).to.eq(true);
+        });
+    });
+
     it('Testing onReset(), "testFunction" should be called', () => {
       const test = {
         testFunction: () => {
