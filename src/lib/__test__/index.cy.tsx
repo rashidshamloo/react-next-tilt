@@ -1156,6 +1156,18 @@ describe('<Tilt />', () => {
       cy.mount(<MockTilt spotGlareEnable={false} />);
       cy.get('[data-testid="spot-glare"]').should('not.exist');
     });
+    it('Testing spotGlareSizePercent (50)', () => {
+      cy.mount(
+        <MockTilt
+          spotGlareEnable={true}
+          spotGlareSizePercent={50}
+          spotGlareColor="white"
+        />
+      );
+      cy.get('[data-testid="spot-glare"]')
+        .should('have.attr', 'style')
+        .should('contain', 'radial-gradient(white, transparent 25%)');
+    });
     it('Testing spotGlareColor (green)', () => {
       cy.mount(<MockTilt spotGlareEnable={true} spotGlareColor="green" />);
       cy.get('[data-testid="spot-glare"]')

@@ -50,6 +50,9 @@ const meta: Meta<typeof Tilt> = {
     lineGlareWidthPercent: {
       control: { type: 'range', min: 0, max: 50, step: 1 },
     },
+    spotGlareSizePercent: {
+      control: { type: 'range', min: 0, max: 400, step: 1 },
+    },
     tiltMaxAngleX: {
       control: { type: 'range', min: 0, max: 90, step: 1 },
     },
@@ -194,6 +197,7 @@ export const SpotGlare: Story = {
     controls: {
       include: [
         'spotGlareEnable',
+        'spotGlareSizePercent',
         'spotGlareMaxOpacity',
         'spotGlareColor',
         'spotGlarePosition',
@@ -205,6 +209,7 @@ export const SpotGlare: Story = {
   args: {
     children: <Image />,
     lineGlareEnable: false,
+    spotGlareSizePercent: 200,
     spotGlareEnable: true,
     spotGlareMaxOpacity: 0.5,
     spotGlareColor: 'white',

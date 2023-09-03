@@ -46,6 +46,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       lineGlareDirection = 'to-bottom-right',
       lineGlareHoverPosition = 'top-left',
       spotGlareEnable = true,
+      spotGlareSizePercent = 200,
       spotGlareMaxOpacity = 0.5,
       spotGlareMixBlendMode = 'normal',
       spotGlarePosition = 'top',
@@ -111,6 +112,19 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       // halving width because the percentage is applied to the
       // line glare element which is twice the size
       lineGlareWidthPercent = limitToRange(lineGlareWidthPercent, 0, 50) / 2;
+    }
+
+    // spot glare size check
+    if (spotGlareEnable) {
+      /*
+       * halving the value because spotGlareSizePercent is set
+       * as the end point of the background radial-gradient of
+       * the spot glare element and it's twice the size of the tilt element
+       * so a value of 100 will actually result in it being 200%
+       * of the size of the tilt element which is the default
+       */
+      spotGlareSizePercent =
+        spotGlareSizePercent < 0 ? 0 : spotGlareSizePercent / 2;
     }
 
     // limit max angles to [0 - 90]
@@ -729,7 +743,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
                     width: '200%',
                     height: '200%',
                     transition: CSSTransition,
-                    backgroundImage: `radial-gradient(${spotGlareColor}, transparent)`,
+                    backgroundImage: `radial-gradient(${spotGlareColor}, transparent ${spotGlareSizePercent}%)`,
                     transform: 'translateX(0%) translateY(0%)',
                     opacity: '0',
                   }}

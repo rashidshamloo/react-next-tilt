@@ -262,6 +262,18 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    */
   spotGlareEnable?: boolean;
   /**
+   * Size of the spot glare effect in relation to the component between `0` to `Infinity`
+   *
+   * @note If `spotGlarePosition` is set to anything other than `'all'`, only half of the spot glare effect is visible at any time.
+   *
+   * That's why the default value is 200 to cover the whole element.
+   *
+   * @default 200
+   *
+   * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--spot-glare Storybook}
+   */
+  spotGlareSizePercent?: number;
+  /**
    * Maximum opacity of the spot glare effect
    *
    * @default 0.5

@@ -123,7 +123,7 @@ export const getSpotGlareTransform = (
     /*
      *  for the 'all' postition, starting position is at the center
      *  and when hovering from top to bottom (offsetY = [0 - 1]),
-     *  translateY should be chnaging from [-25% - 25%]
+     *  translateY should be changing from [-25% - 25%]
      *  mapping [0 - 1] to [-25 - 25]
      *  * -0.5 = [-0.5 - 0.5] => * 50 = [-25 - 25]
      *  and similar mapping is applied to offsetX
