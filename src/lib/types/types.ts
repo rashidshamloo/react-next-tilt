@@ -404,9 +404,15 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    */
   tiltStyle?: CSSProperties;
   /**
+   * className passed to the component's tilt element
+   *
+   * @default undefined
+   */
+  tiltClass?: string;
+  /**
    * Properties passed to the tilt element
    *
-   * @example className='...' data-...='...'
+   * @example aria-...='...' data-...='...'
    *
    * @default undefined
    */

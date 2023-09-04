@@ -61,6 +61,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       disableScrollOnTouch = true,
       style,
       tiltStyle,
+      tiltClass,
       tiltProps,
       gyroMaxAngleX = 0,
       gyroMaxAngleY = 0,
@@ -717,6 +718,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
               },
               tiltStyle
             )}
+            className={tiltClass}
             {...tiltProps}
           >
             {children}

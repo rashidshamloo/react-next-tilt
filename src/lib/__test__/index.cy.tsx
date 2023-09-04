@@ -275,6 +275,13 @@ describe('<Tilt />', () => {
       .should('contain', 'color: green');
   });
 
+  it('Testing tiltClass, tilt class should contain "test-class"', () => {
+    cy.mount(<MockTilt tiltClass="test-class" />);
+    cy.get('[data-testid="tilt"]')
+      .should('have.attr', 'class')
+      .should('contain', 'test-class');
+  });
+
   it('Testing tiltProps, tilt should contain the "data-testprop" property', () => {
     cy.mount(<MockTilt tiltProps={{ 'data-testprop': 'test' }} />);
     cy.get('[data-testid="tilt"]')
