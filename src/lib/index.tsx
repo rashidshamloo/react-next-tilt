@@ -18,7 +18,6 @@ import {
   getSpotGlareTransform,
   getLineGlareTransform,
   getHTMLElement,
-  isDeepEqual,
 } from './utility/utility';
 
 // types
@@ -798,9 +797,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
   }
 );
 
-export const Tilt = memo(NextTilt, (prevProps, nextProps) =>
-  isDeepEqual(prevProps, nextProps)
-);
+export const Tilt = memo(NextTilt);
 
 Tilt.displayName = 'Tilt';
 
