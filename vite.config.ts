@@ -17,6 +17,7 @@ export default defineConfig({
           react: 'React',
           'react-dom': 'reactDom',
         },
+        exports: 'named',
       },
     },
   },
