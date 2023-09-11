@@ -189,7 +189,7 @@ export const getHTMLElement = (
   if (el instanceof HTMLElement) return el;
 
   // if it's the document, case it to HTMLElement and return it
-  if (el instanceof Document) return document as unknown as HTMLElement;
+  if (el instanceof Document) return document.documentElement;
 
   // if it's a "RefObject" and "ref.current.element" is an HTMLElement, return it
   // (for TiltRef, FlipTiltRef, and ParallaxRef)
