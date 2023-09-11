@@ -351,13 +351,13 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
 
     // sets the offset value based on clinetX/Y
     const setOffset = useCallback(
-      (position: Position, element: HTMLElement | Document | null) => {
+      (position: Position, element: HTMLElement | null) => {
         if (!element) return;
 
         // adding fullPageListening check so we don't have to
         // run the "instanceof" check everytime if fullPageListening
         // is false (which is the most common case)
-        if (fullPageListening && element instanceof Document) {
+        if (fullPageListening) {
           offset.current = {
             offsetX: position.x / window.innerWidth,
             offsetY: position.y / window.innerHeight,
@@ -433,7 +433,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
         if (disabled) return;
         setOffset(
           { x: e.clientX, y: e.clientY },
-          e.currentTarget as HTMLElement | Document
+          e.currentTarget as HTMLElement
         );
         setTiltAngle(getAngleFromOffset());
         updateLineGlare();
@@ -459,7 +459,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
               x: Touch.clientX,
               y: Touch.clientY,
             },
-            e.currentTarget as HTMLElement | Document
+            e.currentTarget as HTMLElement
           );
           setTiltAngle(getAngleFromOffset());
           updateLineGlare();
