@@ -16,7 +16,9 @@ import {
   limitToRange,
   getSpotGlareOpacity,
   getSpotGlareTransform,
+  getSpotGlareInitialTransform,
   getLineGlareTransform,
+  getLineGlareInitialTransform,
   getHTMLElement,
 } from './utility/utility';
 
@@ -44,6 +46,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       lineGlareReverse = false,
       lineGlareDirection = 'to-bottom-right',
       lineGlareHoverPosition = 'top-left',
+      lineGlareFixedPosition = undefined,
       spotGlareEnable = true,
       spotGlareSizePercent = 200,
       spotGlareMaxOpacity = 0.5,
@@ -51,6 +54,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
       spotGlarePosition = 'top',
       spotGlareColor = 'white',
       spotGlareReverse = false,
+      spotGlareFixedPosition = undefined,
       tiltMaxAngleX = 20,
       tiltMaxAngleY = 20,
       tiltReverse = false,
@@ -198,7 +202,12 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
 
     // updates spot glare element's transform and opacity
     const updateSpotGlare = useCallback((): void => {
-      if (!containerRef.current || !spotGlareRef.current || !offset.current)
+      if (
+        !containerRef.current ||
+        !spotGlareRef.current ||
+        !offset.current ||
+        spotGlareFixedPosition
+      )
         return;
 
       const opacity = getSpotGlareOpacity(
@@ -219,11 +228,21 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
           spotGlareRef.current.style.transform = transform;
         }
       });
-    }, [spotGlarePosition, spotGlareMaxOpacity, spotGlareReverse]);
+    }, [
+      spotGlarePosition,
+      spotGlareMaxOpacity,
+      spotGlareReverse,
+      spotGlareFixedPosition,
+    ]);
 
     // updates line glare element's transform
     const updateLineGlare = useCallback((): void => {
-      if (!containerRef.current || !lineGlareRef.current || !offset.current)
+      if (
+        !containerRef.current ||
+        !lineGlareRef.current ||
+        !offset.current ||
+        lineGlareFixedPosition
+      )
         return;
 
       const transform = getLineGlareTransform(
@@ -236,7 +255,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
         if (lineGlareRef.current)
           lineGlareRef.current.style.transform = transform;
       });
-    }, [lineGlareHoverPosition, lineGlareReverse]);
+    }, [lineGlareHoverPosition, lineGlareReverse, lineGlareFixedPosition]);
 
     // calculates tilt angle from offset
     const getAngleFromOffset = useCallback(
@@ -333,21 +352,28 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
         // the last mousemove/touchmove's requestAnimationFrame() call could
         // run after this function and glares and tilt would not be reset.
         requestAnimationFrame(() => {
-          if (lineGlareRef.current) {
-            lineGlareRef.current.style.transform = `translateX(${
-              !lineGlareReverse ? '-100%' : '50%'
-            })`;
+          if (lineGlareRef.current && !lineGlareFixedPosition) {
+            lineGlareRef.current.style.transform =
+              getLineGlareInitialTransform(lineGlareReverse);
           }
-          if (spotGlareRef.current) {
+          if (spotGlareRef.current && !spotGlareFixedPosition) {
             spotGlareRef.current.style.transform =
-              'translateX(0%) translateY(0%)';
+              getSpotGlareInitialTransform();
             spotGlareRef.current.style.opacity = '0';
           }
           if (tiltRef.current)
             tiltRef.current.style.transform = `rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
         });
       }
-    }, [initialAngleX, initialAngleY, lineGlareReverse, onReset, tilt]);
+    }, [
+      initialAngleX,
+      initialAngleY,
+      lineGlareReverse,
+      spotGlareFixedPosition,
+      lineGlareFixedPosition,
+      onReset,
+      tilt,
+    ]);
 
     // sets the offset value based on clinetX/Y
     const setOffset = useCallback(
@@ -739,14 +765,22 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
                   data-testid={testIdEnable ? 'spot-glare' : undefined}
                   style={{
                     position: 'absolute',
-                    left: spotGlarePosition === 'all' ? '-50%' : '-100%',
-                    top: spotGlarePosition === 'all' ? '-50%' : '-100%',
+                    left:
+                      spotGlarePosition === 'all' && !spotGlareFixedPosition
+                        ? '-50%'
+                        : '-100%',
+                    top:
+                      spotGlarePosition === 'all' && !spotGlareFixedPosition
+                        ? '-50%'
+                        : '-100%',
                     width: '200%',
                     height: '200%',
                     transition: CSSTransition,
                     backgroundImage: `radial-gradient(${spotGlareColor}, transparent ${spotGlareSizePercent}%)`,
-                    transform: 'translateX(0%) translateY(0%)',
-                    opacity: '0',
+                    transform: getSpotGlareInitialTransform(
+                      spotGlareFixedPosition
+                    ),
+                    opacity: spotGlareFixedPosition ? spotGlareMaxOpacity : '0',
                   }}
                 />
               </div>
@@ -769,7 +803,7 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
                   ref={lineGlareRef}
                   style={{
                     position: 'absolute',
-                    left: 0,
+                    left: lineGlareFixedPosition ? '-100%' : 0,
                     top: '-50%',
                     width: '200%',
                     height: '200%',
@@ -778,9 +812,10 @@ const NextTilt = forwardRef<TiltRef, TiltProps>(
                       : '',
                     transition: CSSTransition,
                     opacity: String(lineGlareMaxOpacity),
-                    transform: `translateX(${
-                      !lineGlareReverse ? '-100%' : '50%'
-                    })`,
+                    transform: getLineGlareInitialTransform(
+                      lineGlareReverse,
+                      lineGlareFixedPosition
+                    ),
                     backgroundImage: `linear-gradient(${
                       lineGlareDirection === 'to-bottom-right'
                         ? 'to bottom right'

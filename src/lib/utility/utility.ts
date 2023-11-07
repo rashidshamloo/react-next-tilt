@@ -6,6 +6,8 @@ import {
   SpotGlarePosition,
   LineGlareHoverPosition,
   Offset,
+  SpotGlareFixedPosition,
+  LineGlareFixedPosition,
 } from '../types/types';
 
 // limits number to be in [start - end] range
@@ -135,6 +137,42 @@ export const getSpotGlareTransform = (
   return transform;
 };
 
+// calculates the initial transform of the spot glare element
+export const getSpotGlareInitialTransform = (
+  spotGlareFixedPosition?: SpotGlareFixedPosition
+) => {
+  if (!spotGlareFixedPosition) return 'translateX(0%) translateY(0%)';
+
+  switch (spotGlareFixedPosition) {
+    case 'top-left':
+      spotGlareFixedPosition = { left: '25%', top: '25%' };
+      break;
+    case 'top-right':
+      spotGlareFixedPosition = { left: '75%', top: '25%' };
+      break;
+    case 'bottom-left':
+      spotGlareFixedPosition = { left: '25%', top: '75%' };
+      break;
+    case 'bottom-right':
+      spotGlareFixedPosition = { left: '75%', top: '75%' };
+      break;
+    case 'center':
+      spotGlareFixedPosition = { left: '50%', top: '50%' };
+      break;
+  }
+
+  // halving the percentage values because the glare element
+  // is twice the size of the component
+  const translateX = spotGlareFixedPosition.left.includes('%')
+    ? String(parseInt(spotGlareFixedPosition.left) / 2) + '%'
+    : spotGlareFixedPosition.left;
+  const translateY = spotGlareFixedPosition.top.includes('%')
+    ? String(parseInt(spotGlareFixedPosition.top) / 2) + '%'
+    : spotGlareFixedPosition.top;
+
+  return `translateX(${translateX}) translateY(${translateY})`;
+};
+
 // calculates position of the spot glare element
 export const getLineGlareTransform = (
   offset: Offset,
@@ -181,6 +219,35 @@ export const getLineGlareTransform = (
   return `translateX(${translateX}%)`;
 };
 
+// calculates the initial transform of the line glare element
+export const getLineGlareInitialTransform = (
+  lineGlareReverse: boolean,
+  lineGlareFixedPosition?: LineGlareFixedPosition
+) => {
+  if (!lineGlareFixedPosition)
+    return `translateX(${!lineGlareReverse ? '-100%' : '50%'})`;
+
+  switch (lineGlareFixedPosition) {
+    case 'left':
+      lineGlareFixedPosition = { left: '25%' };
+      break;
+    case 'center':
+      lineGlareFixedPosition = { left: '50%' };
+      break;
+    case 'right':
+      lineGlareFixedPosition = { left: '75%' };
+      break;
+  }
+
+  // halving the percentage values because the glare element
+  // is twice the size of the component
+  const translateX = lineGlareFixedPosition.left.includes('%')
+    ? String(parseInt(lineGlareFixedPosition.left) / 2) + '%'
+    : lineGlareFixedPosition.left;
+
+  return `translateX(${translateX})`;
+};
+
 // gets HTMLElement from the union
 export const getHTMLElement = (
   el: HTMLElement | RefObject<unknown> | Document
@@ -188,7 +255,7 @@ export const getHTMLElement = (
   // if it's an HTMLElement, return it
   if (el instanceof HTMLElement) return el;
 
-  // if it's the document, case it to HTMLElement and return it
+  // if it's the document, return documentElement
   if (el instanceof Document) return document.documentElement;
 
   // if it's a "RefObject" and "ref.current.element" is an HTMLElement, return it

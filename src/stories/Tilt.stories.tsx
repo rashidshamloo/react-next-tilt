@@ -72,6 +72,21 @@ const meta: Meta<typeof Tilt> = {
     spotGlareMaxOpacity: {
       control: { type: 'range', min: 0, max: 1, step: 0.1 },
     },
+    spotGlareFixedPosition: {
+      options: [
+        undefined,
+        'top-left',
+        'top-right',
+        'bottom-left',
+        'bottom-right',
+        'center',
+      ],
+      control: { type: 'radio' },
+    },
+    lineGlareFixedPosition: {
+      options: [undefined, 'left', 'right', 'center'],
+      control: { type: 'radio' },
+    },
   },
 };
 
@@ -173,6 +188,7 @@ export const LineGlare: Story = {
         'lineGlareHoverPosition',
         'lineGlareReverse',
         'lineGlareMixBlendMode',
+        'lineGlareFixedPosition',
       ],
     },
   },
@@ -203,6 +219,7 @@ export const SpotGlare: Story = {
         'spotGlarePosition',
         'spotGlareReverse',
         'spotGlareMixBlendMode',
+        'spotGlareFixedPosition',
       ],
     },
   },

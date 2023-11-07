@@ -1156,6 +1156,36 @@ describe('<Tilt />', () => {
           .should('contain', 'transform: translateX(-100%)');
       });
     });
+    describe('Testing lineGlareFixedPosition', () => {
+      it('Testing with lineGlareFixedPosition = "center", transform should be "translateX(25%)"', () => {
+        cy.mount(
+          <MockTilt
+            lineGlareEnable={true}
+            lineGlareFixedPosition="center"
+            lineGlareMaxOpacity={0.5}
+          />
+        );
+        cy.get('[data-testid="line-glare"]')
+          .should('have.attr', 'style')
+          .should('contain', 'opacity: 0.5')
+          .should('contain', 'left: -100%')
+          .should('contain', 'transform: translateX(25%)');
+      });
+      it('Testing with lineGlareFixedPosition = { left: "20%" }, transform should be "translateX(10%)"', () => {
+        cy.mount(
+          <MockTilt
+            lineGlareEnable={true}
+            lineGlareFixedPosition={{ left: '20%' }}
+            lineGlareMaxOpacity={0.5}
+          />
+        );
+        cy.get('[data-testid="line-glare"]')
+          .should('have.attr', 'style')
+          .should('contain', 'opacity: 0.5')
+          .should('contain', 'left: -100%')
+          .should('contain', 'transform: translateX(10%)');
+      });
+    });
   });
 
   describe('Testing spot glare', () => {
@@ -1638,6 +1668,36 @@ describe('<Tilt />', () => {
             .should('contain', 'transform: translateX(0%) translateY(25%)')
             .should('contain', 'opacity: 1');
         });
+      });
+    });
+    describe('Testing spotGlareFixedPosition', () => {
+      it('Testing with spotGlareFixedPosition = "center", transform should be "translateX(25%) translateY(25%)"', () => {
+        cy.mount(
+          <MockTilt
+            spotGlareEnable={true}
+            spotGlareFixedPosition="center"
+            spotGlareMaxOpacity={0.5}
+          />
+        );
+        cy.get('[data-testid="spot-glare"]')
+          .should('have.attr', 'style')
+          .should('contain', 'opacity: 0.5')
+          .should('contain', 'left: -100%')
+          .should('contain', 'transform: translateX(25%) translateY(25%)');
+      });
+      it('Testing with spotGlareFixedPosition = { left: "20%", top: "20px" }, transform should be "translateX(10%) translateY(20px)"', () => {
+        cy.mount(
+          <MockTilt
+            spotGlareEnable={true}
+            spotGlareFixedPosition={{ left: '20%', top: '20px' }}
+            spotGlareMaxOpacity={0.5}
+          />
+        );
+        cy.get('[data-testid="spot-glare"]')
+          .should('have.attr', 'style')
+          .should('contain', 'opacity: 0.5')
+          .should('contain', 'left: -100%')
+          .should('contain', 'transform: translateX(10%) translateY(20px)');
       });
     });
     describe('Testing spotGlareReverse', () => {

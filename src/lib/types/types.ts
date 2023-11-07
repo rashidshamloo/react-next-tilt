@@ -34,6 +34,23 @@ export interface Offset {
   offsetX: number;
   offsetY: number;
 }
+export type SpotGlareFixedPosition =
+  | 'center'
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right'
+  | {
+      left: `${number}px` | `${number}%`;
+      top: `${number}px` | `${number}%`;
+    };
+export type LineGlareFixedPosition =
+  | 'center'
+  | 'left'
+  | 'right'
+  | {
+      left: `${number}px` | `${number}%`;
+    };
 
 // ref
 export interface TiltRef {
@@ -254,6 +271,29 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    */
   lineGlareHoverPosition?: LineGlareHoverPosition;
   /**
+   *
+   * Sets the position of the line glare element to a fixed position inside the component.
+   *
+   * @note
+   *
+   * The position determines the center of the line glare element.
+   *
+   * The `left` property can be specified in pixels ('px') or percentage ('%').
+   *
+   * When set, the line glare element will not respond to hover/touch and will always be at the specified position.
+   *
+   * @default undefined
+   *
+   * @example
+   *
+   * 'top-left', 'top-right', 'bottom-left', 'bottom-right'
+   *
+   * { left: '25%' }, { left: '250px' }
+   *
+   * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--line-glare Storybook}
+   */
+  lineGlareFixedPosition?: LineGlareFixedPosition;
+  /**
    * Enables/Disables the spot glare effect
    *
    * @default true
@@ -323,6 +363,29 @@ export interface TiltProps extends HTMLAttributes<HTMLDivElement> {
    * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--spot-glare Storybook}
    */
   spotGlareReverse?: boolean;
+  /**
+   *
+   * Sets the position of the spot glare element to a fixed position inside the component.
+   *
+   * @note
+   *
+   * The position determines the center of the spot glare element.
+   *
+   * The `left` and `top` properties can be specified in pixels ('px') or percentage ('%').
+   *
+   * When set, the spot glare element will not respond to hover/touch and will always be at the specified position.
+   *
+   * @default undefined
+   *
+   * @example
+   *
+   * 'top-left', 'top-right', 'bottom-left', 'bottom-right'
+   *
+   * { left: '25%', top: '25%' }, { left: '250px', top: '250px' }, { left: '25%', top: '250px' }
+   *
+   * @see {@link https://rashidshamloo.github.io/react-next-tilt/?path=/story/tilt-react-next-tilt--spot-glare Storybook}
+   */
+  spotGlareFixedPosition?: SpotGlareFixedPosition;
   /**
    * Maximum tilt angle around the `X` axis between `0` to `90`
    *
